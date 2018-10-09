@@ -3,21 +3,22 @@
 use yii\db\Migration;
 
 /**
- * Handles the creation of table `ingredients`.
+ * Handles the creation of table `recipes`.
  */
-class m181004_082520_create_ingredients_table extends Migration
+class m181009_103105_create_recipes_table extends Migration
 {
     /**
      * {@inheritdoc}
      */
     public function safeUp()
     {
-        $this->createTable('ingredients', [
+        $this->createTable('recipes', [
             'id' => $this->primaryKey()->unsigned(),
-            'name' => $this->string(255),
+            'name' => $this->string(),
             'description' => $this->text(),
-	        'dt_add' => $this->dateTime(),
             'status' => $this->tinyInteger(3)->unsigned(),
+            'slug' => $this->string(),
+            'dt_add' => $this->dateTime(),
         ]);
     }
 
@@ -26,6 +27,6 @@ class m181004_082520_create_ingredients_table extends Migration
      */
     public function safeDown()
     {
-        $this->dropTable('ingredients');
+        $this->dropTable('recipes');
     }
 }
