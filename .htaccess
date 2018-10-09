@@ -38,7 +38,7 @@ Options +SymLinksIfOwnerMatch
 RewriteEngine On
 IndexIgnore */*
 # Перенаправляем administrator на входной скрипт админки
-RewriteRule ^super-puper(.*)?$ /backend/web/$1 [L,PT]
+RewriteRule ^admin(.*)?$ /backend/web/$1 [L,PT]
 # Перенаправляем все запросы на входной скрипт
 RewriteRule ^([^/].*)?$ /frontend/web/$1
 </IfModule>

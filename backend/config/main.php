@@ -11,10 +11,18 @@ return [
     'basePath' => dirname(__DIR__),
     'controllerNamespace' => 'backend\controllers',
     'bootstrap' => ['log'],
-    'modules' => [],
+    'modules' => [
+	    'recipes' => [
+		    'class' => 'backend\modules\recipes\recipes',
+	    ],
+	    'ingredients' => [
+		    'class' => 'backend\modules\ingredients\ingredients',
+	    ],
+    ],
     'components' => [
         'request' => [
             'csrfParam' => '_csrf-backend',
+            'baseUrl' => '/admin',
         ],
         'user' => [
             'identityClass' => 'common\models\User',
@@ -37,14 +45,18 @@ return [
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
-        /*
+	    /*ЧПУ*/
         'urlManager' => [
-            'enablePrettyUrl' => true,
-            'showScriptName' => false,
-            'rules' => [
-            ],
+	        'enablePrettyUrl' => true,
+	        'showScriptName' => false,
+//	        'class'=>'backend\components\LangUrlManager',
+//	        'languages' => ['en', 'ru'],
+	        'rules' => [
+		        '/' => 'admin/index',
+		        '<controller:\w+>/<action:\w+>/' => '<controller>/<action>',
+		        'page/<view:[a-zA-Z0-9-]+>' => 'site/page',
+	        ],
         ],
-        */
     ],
     'params' => $params,
 ];
