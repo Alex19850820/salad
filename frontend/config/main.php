@@ -12,13 +12,33 @@ return [
     'bootstrap' => ['log'],
     'controllerNamespace' => 'frontend\controllers',
     'components' => [
+	    'user' => [
+		    'identityClass' => 'app\models\User',
+		    'enableSession' => false,
+//            'identityCookie' => ['name' => '_identity-frontend', 'httpOnly' => true],
+	    ],
+	    'response' => [
+		    'format' => yii\web\Response::FORMAT_JSON,
+		    'charset' => 'UTF-8',
+		    'on beforeSend' => function ($event) {
+			    header("Access-Control-Allow-Origin: *");
+		    }
+	    ],
+	    'i18n' => [
+		    'translations' => [
+			    '*' => [
+				    'class' => 'yii\i18n\PhpMessageSource',
+				    'basePath' => '@app/messages', // if advanced application, set @frontend/messages
+				    'sourceLanguage' => 'en',
+				    'fileMap' => [
+					    //'main' => 'main.php',
+				    ],
+			    ],
+		    ],
+	    ],
         'request' => [
             'csrfParam' => '_csrf-frontend',
-        ],
-        'user' => [
-            'identityClass' => 'common\models\User',
-            'enableAutoLogin' => true,
-            'identityCookie' => ['name' => '_identity-frontend', 'httpOnly' => true],
+            'baseUrl' => '',
         ],
         'session' => [
             // this is the name of the session cookie used for login on the frontend
@@ -37,11 +57,20 @@ return [
             'errorAction' => 'site/error',
         ],
         'urlManager' => [
-            'enablePrettyUrl' => true,
-            'showScriptName' => false,
-            'rules' => [
-            ],
+//	        'scriptUrl'=>'/index.php',
+	        'class' => 'yii\web\UrlManager',
+	        'enablePrettyUrl' => true,
+	        'showScriptName' => false,
+	        'rules' => [
+		        '/' => 'site/index',
+		        '<controller:\w+>/<action:\w+>/' => '<controller>/<action>',
+	        ],
         ],
+    ],
+    'modules' => [
+	    'api' => [
+		    'class' => 'frontend\modules\api\api',
+	    ],
     ],
     'params' => $params,
 ];

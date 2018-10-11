@@ -19,21 +19,21 @@ $this->params['breadcrumbs'][] = $this->title;
     <p>
         <?= Html::a(Yii::t('recipes', 'Create Recipes'), ['create'], ['class' => 'btn btn-success']) ?>
     </p>
-
-    <?= GridView::widget([
-        'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
-        'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
-
-            'id',
-            'name',
-            'description:ntext',
-            'status',
-            'slug',
-            //'dt_add',
-
-            ['class' => 'yii\grid\ActionColumn'],
-        ],
-    ]); ?>
+	
+	<?= GridView::widget([
+		'dataProvider' => $dataProvider,
+		'filterModel' => $searchModel,
+		'columns' => [
+			['class' => 'yii\grid\SerialColumn'],
+			
+			'id',
+			'name',
+			'description:ntext',
+			'status',
+			'slug',
+			//'dt_add',
+			
+			['class' => 'yii\grid\ActionColumn'],
+		],
+	]); ?>
 </div>

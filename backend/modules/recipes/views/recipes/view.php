@@ -5,10 +5,17 @@ use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
 /* @var $model backend\modules\recipes\models\Recipes */
-
+//$model->description = $model->setDescription($model->id);
 $this->title = $model->name;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('recipes', 'Recipes'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
+//$model->description = implode(',' , $model->getDescription());
+$ingridients = \common\models\Ingredients::find()->where(['id' => $model->getDescription()])->all();
+$str = "";
+foreach ($ingridients as $ingridient) {
+	$str .= $ingridient->name.",";
+}
+$model->description = $str;
 ?>
 <div class="recipes-view">
 
