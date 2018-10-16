@@ -20,43 +20,43 @@ use yii\web\NotFoundHttpException;
 use frontend\modules\api\models\ApiRequest;
 
 
-class RequestController extends DefaultController {
+class RequestController extends ApiComponent {
 	
 	public $status = 0;
 	public $error_msg;
 	public $user;
-	private $token;
+//	private $token;
 	public $post;
 	public $profile;
 	
 	
-	public function beforeAction( $action ) {
-		if ( \Yii::$app->request->isPost ) {
-			$this->post = Yii::$app->request->post();
-			\Yii::$app->response->format = Response::FORMAT_JSON;
-			$this->layout                = false;
-			header('Access-Control-Allow-Origin: *');
-			if( $action->id != 'login' && $action->id != 'add' ){
-				if ( $this->isToken() ) {
-					$this->token = $this->isToken();
-					$this->user = User::findOne( $this->token->user_id );
-					return true;
-				} else {
-					throw  new NotFoundHttpException( 'Страница не найдена', 404 );
-				}
-			}
-			return true;
-		} else {
-			throw  new NotFoundHttpException( 'Страница не найдена', 404 );
-		}
-	}
-	
-	private function isToken() {
-		if (isset(Yii::$app->request->post()["token"])){
-			return Token::findOne( [ "token" => Yii::$app->request->post()["token"] ] );
-		}
-		return false;
-	}
+//	public function beforeAction( $action ) {
+//		if ( \Yii::$app->request->isPost ) {
+//			$this->post = Yii::$app->request->post();
+//			\Yii::$app->response->format = Response::FORMAT_JSON;
+//			$this->layout                = false;
+//			header('Access-Control-Allow-Origin: *');
+//			if( $action->id != 'login' && $action->id != 'add' ){
+//				if ( $this->isToken() ) {
+//					$this->token = $this->isToken();
+//					$this->user = User::findOne( $this->token->user_id );
+//					return true;
+//				} else {
+//					throw  new NotFoundHttpException( 'Страница не найдена', 404 );
+//				}
+//			}
+//			return true;
+//		} else {
+//			throw  new NotFoundHttpException( 'Страница не найдена', 404 );
+//		}
+//	}
+//
+//	private function isToken() {
+//		if (isset(Yii::$app->request->post()["token"])){
+//			return Token::findOne( [ "token" => Yii::$app->request->post()["token"] ] );
+//		}
+//		return false;
+//	}
 	
 	public function actionIndex() {
 		

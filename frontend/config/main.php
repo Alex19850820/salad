@@ -13,7 +13,7 @@ return [
     'controllerNamespace' => 'frontend\controllers',
     'components' => [
 	    'user' => [
-		    'identityClass' => 'app\models\User',
+		    'identityClass' => 'common\models\User',
 		    'enableSession' => false,
 //            'identityCookie' => ['name' => '_identity-frontend', 'httpOnly' => true],
 	    ],

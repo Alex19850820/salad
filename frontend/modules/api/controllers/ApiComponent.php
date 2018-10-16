@@ -12,7 +12,6 @@ use yii\filters\auth\CompositeAuth;
 use yii\filters\auth\HttpBearerAuth;
 use yii\filters\ContentNegotiator;
 use yii\rest\Controller;
-use Yii;
 use yii\web\Response;
 
 class ApiComponent extends Controller
@@ -38,5 +37,9 @@ class ApiComponent extends Controller
 				],
 			]
 		];
+//		$behaviors = parent::behaviors();
+//		$behaviors['authenticator']['class'] = HttpBearerAuth::className();
+//		$behaviors['authenticator']['only'] = [];
+//		return $behaviors;
 	}
 }

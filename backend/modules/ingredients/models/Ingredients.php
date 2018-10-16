@@ -16,12 +16,5 @@ use yii\db\ActiveRecord;
  */
 class Ingredients extends \common\models\Ingredients
 {
-	public function beforeSave( $insert ) {
-		if ( parent::beforeSave( $insert ) ) {
-			$date = date("Y-m-d H:i:s");
-			$this->dt_add = $date;
-			return true;
-		}
-		return false;
-	}
+
 }

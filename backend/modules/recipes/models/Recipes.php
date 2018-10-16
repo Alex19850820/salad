@@ -28,15 +28,6 @@ class Recipes extends \common\models\Recipes
 		];
 	}
 	
-	public function beforeSave( $insert ) {
-		if ( parent::beforeSave( $insert ) ) {
-			$date = date("Y-m-d H:i:s");
-			$this->dt_add = $date;
-			$this->description = json_encode($this->description);
-			return true;
-		}
-		return false;
-	}
 	public function setDescription( $value ) {
 		$this->description = json_encode( $value );
 	}

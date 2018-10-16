@@ -16,6 +16,7 @@ use Yii;
  * @property int $status
  * @property int $created_at
  * @property int $updated_at
+ * @property string $access_token
  */
 class ApiUser extends \common\models\User
 {
@@ -48,6 +49,7 @@ class ApiUser extends \common\models\User
             'status' => Yii::t('user', 'Status'),
             'created_at' => Yii::t('user', 'Created At'),
             'updated_at' => Yii::t('user', 'Updated At'),
+            'access_token' => Yii::t('user', 'Acces token'),
         ];
     }
 }

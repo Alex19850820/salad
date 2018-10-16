@@ -122,6 +122,8 @@ class UserController extends Controller {
 				$token->token    = bin2hex( openssl_random_pseudo_bytes( 64 ) );
 				$token->save();
 				$this->status = 1;
+				$user->access_token = $token->token;
+				$user->save();
 
 				return [ 'status' => $this->status, 'token' => $token ];
 			} else {

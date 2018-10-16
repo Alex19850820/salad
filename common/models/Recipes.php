@@ -51,4 +51,13 @@ class Recipes extends \yii\db\ActiveRecord
             'dt_add' => Yii::t('recipes', 'Dt Add'),
         ];
     }
+	
+	public function beforeSave( $insert ) {
+		if ( parent::beforeSave( $insert ) ) {
+			$date = date("Y-m-d H:i:s");
+			$this->dt_add = $date;
+			return true;
+		}
+		return false;
+	}
 }
