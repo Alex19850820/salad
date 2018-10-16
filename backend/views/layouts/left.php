@@ -33,6 +33,7 @@
                     ['label' => 'Menu Yii2', 'options' => ['class' => 'header']],
                     ['label' => Yii::t('recipes', 'Recipes'), 'icon' => 'file-code-o', 'url' => ['/recipes/recipes']],
 	                ['label' => Yii::t('recipes', 'Ingredients'), 'icon' => 'file-code-o', 'url' => ['/ingredients/ingredients']],
+	                ['label' => Yii::t('recipe_category', 'Recipe Categories'), 'icon' => 'file-code-o', 'url' => ['/recipe_category/recipe-category']],
                     ['label' => 'Gii', 'icon' => 'file-code-o', 'url' => ['/gii']],
                     ['label' => 'Debug', 'icon' => 'dashboard', 'url' => ['/debug']],
                     ['label' => 'Login', 'url' => ['site/login'], 'visible' => Yii::$app->user->isGuest],

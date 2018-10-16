@@ -33,11 +33,11 @@ foreach ($ingredients as $ingredient) {
 	
 <!--	--><?//= $form->field($model, 'description')->textarea(['rows' => 6]) ?>
 	
-	<?= $form->field($model, 'status')->dropDownList([
-		'0' => 'Отключен',
-		'1' => 'Активный',
-	]);
-	?>
+		<?= $form->field($model, 'status')->dropDownList([
+			'0' => 'Отключен',
+			'1' => 'Активный',
+		]);
+		?>
 	
 	<?= $form->field($model, 'dt_add')->hiddenInput()->label(false) ?>
 

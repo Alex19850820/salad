@@ -18,6 +18,9 @@ return [
 	    'ingredients' => [
 		    'class' => 'backend\modules\ingredients\ingredients',
 	    ],
+	    'recipe_category' => [
+		    'class' => 'backend\modules\recipe_category\recipe_category',
+	    ],
     ],
     'components' => [
         'request' => [

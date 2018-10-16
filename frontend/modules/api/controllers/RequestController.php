@@ -11,6 +11,7 @@ namespace frontend\modules\api\controllers;
 use common\models\Ingredients;
 use frontend\modules\api\models\ApiIngredients;
 use frontend\modules\api\models\ApiRecipes;
+use frontend\modules\api\models\ApiRecipeCategory;
 use Yii;
 use yii\widgets\ActiveForm;
 use common\models\Token;
@@ -68,13 +69,13 @@ class RequestController extends ApiComponent {
 	
 	
 
-    public function actionAdd() {
+    public function actionAddRecipes() {
         $model = new ApiRecipes();
 
         $apiRecipes["ApiRecipes"] = Yii::$app->request->post();
 
         $model->load($apiRecipes);
-        $model->dt_add = time();
+	    $model->status = 1;
 
         if (!$model->save()) {
             return ActiveForm::validate($model);
@@ -82,6 +83,38 @@ class RequestController extends ApiComponent {
 
         return "Успешно добавлен";
     }
+	
+	public function actionAddIngredients() {
+		$model = new ApiIngredients();
+		
+		$apiIngredients["ApiIngredients"] = Yii::$app->request->post();
+		
+		$model->load($apiIngredients);
+		$model->status = 1;
+		
+		if (!$model->save()) {
+			return ActiveForm::validate($model);
+		}
+		
+		return "Ингредиент успешно  добавлен";
+	}
+	
+	public function actionAddRecipeCategory() {
+		$model = new ApiRecipeCategory();
+		
+		$apiRecipeCategory["ApiRecipeCategory"] = Yii::$app->request->post();
+		
+		$model->load($apiRecipeCategory);
+		$model->status = 1;
+		
+		if (!$model->save()) {
+			return ActiveForm::validate($model);
+		}
+		
+		return "Категория рецептов успешно  добавлена";
+	}
+	
+    
 
     public function actionDel() {
         $id = Yii::$app->request->post()["id"];
@@ -120,10 +153,9 @@ class RequestController extends ApiComponent {
 		$modelPost = new ApiIngredients();
 		
 		$apiIngredients["ApiIngredients"] = Yii::$app->request->post();
-		$modelPost->load($apiIngredients);
-		$models = ApiIngredients::find()->where(['!=','status', 0])->asArray()->all();
+		$modelPost->load( $apiIngredients );
+		$models = ApiIngredients::find()->where( [ '!=','status',0 ] )->asArray()->all();
 		
 		return $models;
 	}
-    
 }
