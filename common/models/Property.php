@@ -5,27 +5,24 @@ namespace common\models;
 use Yii;
 
 /**
- * This is the model class for table "recipes".
+ * This is the model class for table "property".
  *
  * @property int $id
  * @property string $name
  * @property string $description
  * @property int $status
- * @property string $slug
  * @property string $dt_add
  *
- * @property IngrToRecipes[] $ingrToRecipes
- *
+ * @property PropertyConnIngredients[] $propertyConnIngredients
  */
-class Recipes extends \yii\db\ActiveRecord
+class Property extends \yii\db\ActiveRecord
 {
-	public $ingrToRecipes;
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
-        return 'recipes';
+        return 'property';
     }
 
     /**
@@ -34,11 +31,11 @@ class Recipes extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['description', 'name', 'ingrToRecipes'], 'required'],
+            [['description', 'name'], 'required'],
             [['description'], 'string'],
             [['status'], 'integer'],
             [['dt_add'], 'safe'],
-            [['name', 'slug'], 'string', 'max' => 255],
+            [['name'], 'string', 'max' => 255],
         ];
     }
 
@@ -48,21 +45,20 @@ class Recipes extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => Yii::t('recipes', 'ID'),
-            'name' => Yii::t('recipes', 'Name'),
-            'description' => Yii::t('recipes', 'Description'),
-            'status' => Yii::t('recipes', 'Status'),
-            'slug' => Yii::t('recipes', 'Slug'),
-            'dt_add' => Yii::t('recipes', 'Dt Add'),
+            'id' => Yii::t('property', 'ID'),
+            'name' => Yii::t('property', 'Name'),
+            'description' => Yii::t('property', 'Description'),
+            'status' => Yii::t('property', 'Status'),
+            'dt_add' => Yii::t('property', 'Dt Add'),
         ];
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getIngrToRecipes()
+    public function getPropertyConnIngredients()
     {
-        return $this->hasMany(IngrToRecipes::className(), ['recipes_id' => 'id']);
+        return $this->hasMany(PropertyConnIngredients::className(), ['property_id' => 'id']);
     }
 	
 	public function beforeSave( $insert ) {

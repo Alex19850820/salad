@@ -6,13 +6,12 @@
  * Time: 16:25
  */
 return [
-	'Ingredients' => 'Ингредиенты',
+	'Property' => 'Свойства',
 	'Description' => 'Описание',
 	'Name' => 'Название',
-	'Create Ingredients' => 'Создать ингредиент',
+	'Create Property' => 'Создать свойство',
 	'Save' => 'Сохранить',
 	'Update' => 'Обновить',
 	'Delete' => 'Удалить',
-	'Property' => 'Свойство',
 	'Are you sure you want to delete this item?' => 'Вы серьезно хотите удалить эту запись?',
 ];

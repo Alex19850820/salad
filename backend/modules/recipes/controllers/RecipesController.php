@@ -2,10 +2,13 @@
 
 namespace backend\modules\recipes\controllers;
 
+use common\models\Debug;
 use common\models\Ingredients;
+use common\models\IngrToRecipes;
 use Yii;
 use backend\modules\recipes\models\Recipes;
 use backend\modules\recipes\controllers\RecipesSearch;
+use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -15,6 +18,8 @@ use yii\filters\VerbFilter;
  */
 class RecipesController extends Controller
 {
+	public $data = [];
+	public $ingredients;
     /**
      * {@inheritdoc}
      */
@@ -67,14 +72,16 @@ class RecipesController extends Controller
     public function actionCreate()
     {
         $model = new Recipes();
-        $ingredients = Ingredients::find()->where(['!=','status', 0])->all();
-
+	    foreach ($this->getIngredients() as $ingr) {
+		    $this->data[$ingr->id] = $ingr->name;
+	    }
+	    
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
         return $this->render('create', [
-            'model' => $model, 'ingredients' => $ingredients,
+            'model' => $model, 'data' => $this->data,
         ]);
     }
 
@@ -88,19 +95,27 @@ class RecipesController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-        $model->description = $model->getDescription();
-        
-	    $ingredients = Ingredients::find()->where(['!=','status', 0])->all();
+//        $model->description = $model->getDescription();
+	
+	    foreach ($this->getIngredients() as $ingr ) {
+		    $this->data[$ingr->id] = $ingr->name;
+	    }
+	   
+	    $model->ingrToRecipes =  ArrayHelper::getColumn( IngrToRecipes::find()->where([ 'recipes_id' => $model->id])->all(), 'ingredients_id');
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
         return $this->render('update', [
-            'model' => $model, 'ingredients' => $ingredients,
+            'model' => $model, 'data' => $this->data,
         ]);
     }
-
+	
+	public function getIngredients () {
+		$this->ingredients = Ingredients::find()->where(['!=', 'status', 0])->all();
+		return $this->ingredients;
+	}
     /**
      * Deletes an existing Recipes model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
@@ -124,8 +139,8 @@ class RecipesController extends Controller
      */
     protected function findModel($id)
     {
-        if (($model = Recipes::findOne($id)) !== null) {
-            return $model;
+        if (($model = Recipes::find()->where(['id'=>$id])->with('ingrToRecipes')->one()) !== null) {
+        	return $model;
         }
 
         throw new NotFoundHttpException(Yii::t('recipes', 'The requested page does not exist.'));

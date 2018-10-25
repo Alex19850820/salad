@@ -8,12 +8,9 @@ use kartik\select2\Select2;
 /* @var $model backend\modules\recipes\models\Recipes */
 /* @var $form yii\widgets\ActiveForm */
 /**
- * @var $ingredients object
+ * @var $data array
  **/
-$data = [];
-foreach ($ingredients as $ingredient) {
-	$data[$ingredient->id] = $ingredient->name;
-}
+
 ?>
 
 <div class="recipes-form">
@@ -22,16 +19,18 @@ foreach ($ingredients as $ingredient) {
 
     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
 
-	<?= $form->field($model, 'description')->widget(Select2::classname(), [
+	<?= $form->field($model, 'description')->textarea(['rows' => 6]) ?>
+	
+	<?= $form->field($model, 'ingrToRecipes')->widget(Select2::classname(), [
 		'data' => $data,
 		'language' => 'ru',
-		'options' => ['multiple' => true, 'placeholder' => 'Выберите ингредиенты'],
+		'options' => ['multiple' => true, 'placeholder' => 'Выберите св-ва'],
 		'pluginOptions' => [
-		'allowClear' => true
-	],
-	]);?>
+			'allowClear' => true
+		],
+	])->label('Св-во');?>
 	
-<!--	--><?//= $form->field($model, 'description')->textarea(['rows' => 6]) ?>
+
 	
 		<?= $form->field($model, 'status')->dropDownList([
 			'0' => 'Отключен',

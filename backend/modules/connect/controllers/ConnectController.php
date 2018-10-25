@@ -1,25 +1,19 @@
 <?php
 
-namespace backend\modules\ingredients\controllers;
+namespace backend\modules\connect\controllers;
 
-use common\models\Property;
-use common\models\PropertyConnIngredients;
 use Yii;
-use backend\modules\ingredients\models\Ingredients;
-use backend\modules\ingredients\controllers\IngredientsSearch;
-use yii\helpers\ArrayHelper;
+use backend\modules\connect\models\PropertyConnIngredients;
+use backend\modules\connect\controllers\ConnectSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * IngredientsController implements the CRUD actions for Ingredients model.
+ * ConnectController implements the CRUD actions for PropertyConnIngredients model.
  */
-class IngredientsController extends Controller
+class ConnectController extends Controller
 {
-	
-	public $data = [];
-	public $property;
     /**
      * {@inheritdoc}
      */
@@ -36,12 +30,12 @@ class IngredientsController extends Controller
     }
 
     /**
-     * Lists all Ingredients models.
+     * Lists all PropertyConnIngredients models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new IngredientsSearch();
+        $searchModel = new ConnectSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -51,7 +45,7 @@ class IngredientsController extends Controller
     }
 
     /**
-     * Displays a single Ingredients model.
+     * Displays a single PropertyConnIngredients model.
      * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
@@ -64,35 +58,25 @@ class IngredientsController extends Controller
     }
 
     /**
-     * Creates a new Ingredients model.
+     * Creates a new PropertyConnIngredients model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function getProperty () {
-	    $this->property = Property::find()->where(['!=', 'status', 0])->all();
-	    return $this->property;
-    }
-    
-    
     public function actionCreate()
     {
-        $model = new Ingredients();
-        
-	    foreach ($this->getProperty() as $prop ) {
-		    $this->data[$prop->id] = $prop->name;
-	    }
-	    
+        $model = new PropertyConnIngredients();
+
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
         return $this->render('create', [
-            'model' => $model, 'data' => $this->data,
+            'model' => $model,
         ]);
     }
 
     /**
-     * Updates an existing Ingredients model.
+     * Updates an existing PropertyConnIngredients model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -101,23 +85,18 @@ class IngredientsController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-        
-	    foreach ($this->getProperty() as $prop ) {
-		    $this->data[$prop->id] = $prop->name;
-	    }
-	    $model->propertyConnIngredients =  ArrayHelper::getColumn( PropertyConnIngredients::find()->where([ 'ingredients_id' => $model->id])->all(), 'property_id');
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
         return $this->render('update', [
-            'model' => $model, 'data' => $this->data,
+            'model' => $model,
         ]);
     }
 
     /**
-     * Deletes an existing Ingredients model.
+     * Deletes an existing PropertyConnIngredients model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -131,18 +110,18 @@ class IngredientsController extends Controller
     }
 
     /**
-     * Finds the Ingredients model based on its primary key value.
+     * Finds the PropertyConnIngredients model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Ingredients the loaded model
+     * @return PropertyConnIngredients the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Ingredients::find()->where(['id'=>$id])->with('propertyConnIngredients')->one()) !== null) {
-        	return $model;
+        if (($model = PropertyConnIngredients::findOne($id)) !== null) {
+            return $model;
         }
 
-        throw new NotFoundHttpException(Yii::t('ingredients', 'The requested page does not exist.'));
+        throw new NotFoundHttpException(Yii::t('property_conn_ingredients', 'The requested page does not exist.'));
     }
 }

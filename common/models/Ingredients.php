@@ -12,9 +12,13 @@ use Yii;
  * @property string $description
  * @property int $status
  * @property string $dt_add
+ *
+ * @property IngrToRecipes[] $ingrToRecipes
+ * @property PropertyConnIngredients[] $propertyConnIngredients
  */
 class Ingredients extends \yii\db\ActiveRecord
 {
+	public $propertyConnIngredients;
     /**
      * {@inheritdoc}
      */
@@ -49,6 +53,22 @@ class Ingredients extends \yii\db\ActiveRecord
             'dt_add' => Yii::t('ingredients', 'Dt Add'),
         ];
     }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getIngrToRecipes()
+    {
+        return $this->hasMany(IngrToRecipes::className(), ['ingredients_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getPropertyConnIngredients()
+    {
+        return $this->hasMany(PropertyConnIngredients::className(), ['ingredients_id' => 'id']);
+    }
 	
 	public function beforeSave( $insert ) {
 		if ( parent::beforeSave( $insert ) ) {
@@ -57,5 +77,9 @@ class Ingredients extends \yii\db\ActiveRecord
 			return true;
 		}
 		return false;
+	}
+	
+	public function getNameByID($id){
+		return self::findOne(['id' => $id])->name;
 	}
 }

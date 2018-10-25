@@ -10,12 +10,12 @@ $this->title = $model->name;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('recipes', 'Recipes'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 //$model->description = implode(',' , $model->getDescription());
-$ingridients = \common\models\Ingredients::find()->where(['id' => $model->getDescription()])->all();
-$str = "";
-foreach ($ingridients as $ingridient) {
-	$str .= $ingridient->name.",";
-}
-$model->description = $str;
+//$ingridients = \common\models\Ingredients::find()->where(['id' => $model->getDescription()])->all();
+//$str = "";
+//foreach ($ingridients as $ingridient) {
+//	$str .= $ingridient->name.",";
+//}
+//$model->description = $str;
 ?>
 <div class="recipes-view">
 
@@ -38,6 +38,7 @@ $model->description = $str;
             'id',
             'name',
             'description:ntext',
+            'ingrToRecipes',
             'status',
             'slug',
             'dt_add',

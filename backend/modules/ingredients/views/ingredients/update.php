@@ -4,6 +4,7 @@ use yii\helpers\Html;
 
 /* @var $this yii\web\View */
 /* @var $model backend\modules\ingredients\models\Ingredients */
+/* @var $data array */
 
 $this->title = Yii::t('ingredients', 'Update Ingredients: ' . $model->name, [
     'nameAttribute' => '' . $model->name,
@@ -17,7 +18,7 @@ $this->params['breadcrumbs'][] = Yii::t('ingredients', 'Update');
     <h1><?= Html::encode($this->title) ?></h1>
 
     <?= $this->render('_form', [
-        'model' => $model,
+        'model' => $model, 'data' => $data,
     ]) ?>
 
 </div>

@@ -2,10 +2,13 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use kartik\select2\Select2;
 
 /* @var $this yii\web\View */
 /* @var $model backend\modules\ingredients\models\Ingredients */
 /* @var $form yii\widgets\ActiveForm */
+/* @var $data array */
+
 ?>
 
 <div class="ingredients-form">
@@ -21,12 +24,22 @@ use yii\widgets\ActiveForm;
 	    '1' => 'Активный',
     ]);
     ?>
+	
+	<?= $form->field($model, 'propertyConnIngredients')->widget(Select2::classname(), [
+		'data' => $data,
+		'language' => 'ru',
+		'options' => ['multiple' => true, 'placeholder' => 'Выберите св-ва'],
+		'pluginOptions' => [
+			'allowClear' => true
+		],
+	])->label('Св-во');?>
 
     <?= $form->field($model, 'dt_add')->hiddenInput()->label(false) ?>
 
     <div class="form-group">
         <?= Html::submitButton(Yii::t('ingredients', 'Save'), ['class' => 'btn btn-success']) ?>
     </div>
+	
 
     <?php ActiveForm::end(); ?>
 

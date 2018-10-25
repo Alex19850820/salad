@@ -21,6 +21,12 @@ return [
 	    'recipe_category' => [
 		    'class' => 'backend\modules\recipe_category\recipe_category',
 	    ],
+	    'property' => [
+		    'class' => 'backend\modules\property\property',
+	    ],
+	    'connect' => [
+		    'class' => 'backend\modules\connect\connect',
+	    ],
     ],
     'components' => [
         'request' => [
